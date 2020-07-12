@@ -9,7 +9,7 @@ grafana_admin_password: admin123
 grafana_conf_file: /etc/grafana/grafana.ini
 grafana_dir_conf: /etc/grafana
 grafana_dir_data: /var/lib/grafana
-grafana_dir_home: /usr/share/grafana
+grafana_dir_home: /var/lib/grafana
 grafana_dir_log: /var/log/grafana
 grafana_dir_pid: /var/run/grafana
 grafana_dir_dashboards: /var/lib/grafana/dashboards
@@ -18,9 +18,10 @@ grafana_http_port: 3000
 grafana_group: grafana
 grafana_user: grafana
 
-grafana_prometehus: true
-grafana_prometehus_host: localhost
-grafana_prometehus_port: 9090
+grafana_provision: true
+
+grafana_prometheus_host: localhost
+grafana_prometheus_port: 9090
 
 grafana_plugins:
   - grafana-clock-panel
@@ -30,6 +31,7 @@ grafana_plugins:
   - digiapulssi-breadcrumb-panel
   - crate-datasource
 
+# -------------------------------------
 grafana_database:
   type: sqlite3
   host: 127.0.0.1:3306
@@ -38,6 +40,8 @@ grafana_database:
   password: ''
   path: grafana.db
 
+
+# -------------------------------------
 grafana_conf_data: |
   app_mode = development
 
@@ -45,6 +49,7 @@ grafana_conf_data: |
   data = {{ grafana_dir_data }}
   logs = {{ grafana_dir_log }}
   plugins = {{ grafana_dir_plugins }}
+  provisioning = /etc/grafana/provisioning
 
   [server]
   protocol = http
@@ -101,11 +106,8 @@ grafana_conf_data: |
   [metrics]
   enabled = true
 
-  [dashboards.json]
-  enabled = true
-  path = {{ grafana_dir_dashboards }}
 
-
+# -------------------------------------
 grafana_default:
   conf_dir: "{{ grafana_dir_conf }}"
   conf_file: "{{ grafana_conf_file }}"

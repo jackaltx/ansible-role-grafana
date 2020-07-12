@@ -3,19 +3,12 @@
 - name: "Include {{ ansible_os_family }} vars"
   include_vars: "{{ ansible_os_family }}.yml"
 
-#- name: "Install grafana orig"
-#  include: "install.yml"
-#  when: vars['ansible_distribution_release'] != 'buster'
 
-- name: "Install grafana raspberry pi"
-  include: "install_pi.yml"
-  when: vars['ansible_distribution_release'] == 'buster'
+- name: "Install grafana"
+  include: "install.yml"
 
 - name: "Configure grafana"
   include: "config.yml"
-
-- name: "Configure Provisioning"
-  include: "provision.yml"
 
 - name: "Enable and (re)start grafana service"
   service:
@@ -27,6 +20,11 @@
   wait_for:
     port: "{{ grafana_http_port }}"
 
-#- name: "Install plugins"
-#  include: "install-plugins.yml"
+- name: "Install plugins"
+  include: "install-plugins.yml"
 
+- name: "Configure Datasources"
+  include: "config-datasources.yml"
+
+- name: "Configure Dashboards"
+  include: "config-dashboards.yml"
