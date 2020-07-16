@@ -55,6 +55,9 @@ grafana_conf_data: |
   protocol = http
   http_port = {{ grafana_http_port }}
 
+  [log]
+  filters = provisioning.dashboard:debug
+
   [database]
   type = {{ grafana_database.type }}
   host = {{ grafana_database.host }}

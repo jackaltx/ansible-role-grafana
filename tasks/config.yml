@@ -18,7 +18,7 @@
 
 - name: "Remove previous database"
   file:
-    path: "{{ grafana_dir_home }}grafana.db"
+    path: "{{ grafana_dir_home }}/grafana.db"
     state: absent
 
 
