@@ -16,6 +16,12 @@
     - "{{ grafana_dir_plugins }}"
     - "{{ grafana_dir_dashboards }}"
 
+- name: "Remove previous database"
+  file:
+    path: "{{ grafana_dir_home }}grafana.db"
+    state: absent
+
+
 - name: "Set/Update grafana ini file"
   template:
     src: grafana.ini.j2
